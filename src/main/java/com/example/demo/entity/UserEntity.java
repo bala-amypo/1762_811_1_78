@@ -26,7 +26,7 @@ public class UserEntity {
         this.role=role;
     }
 
-    public VolunteerProfileEntity() {
+    public UserEntity() {
         
     }
 
