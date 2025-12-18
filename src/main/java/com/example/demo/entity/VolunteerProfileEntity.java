@@ -30,11 +30,11 @@ public class VolunteerProfileEntity {
         
     }
 
-    public void setName(String fullname) {
+    public void setFullname(String fullname) {
         this.fullname = fullname;
     }
 
-    public String getName() {
+    public String getFullname() {
         return this.fullname;
     }
 
