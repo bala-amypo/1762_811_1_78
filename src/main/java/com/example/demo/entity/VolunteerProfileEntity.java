@@ -12,6 +12,7 @@ public class VolunteerProfileEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String fullname;
+    @Column(unique=true)
     private String email;
     private String phone;
     private String availabilityStatus;
