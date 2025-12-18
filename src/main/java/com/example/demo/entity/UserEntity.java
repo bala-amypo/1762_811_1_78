@@ -20,7 +20,7 @@ public class UserEntity {
 
     public UserEntity(Long id, String fullname, String email, String phone,String availabilityStatus) {
         // this.id = id;
-       
+        this.fullname = fullname;
         this.email = email;
         this.password = password;
         this.role=role;
@@ -30,6 +30,13 @@ public class UserEntity {
         
     }
 
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
+    }
+
+    public String getFullname() {
+        return this.fullname;
+    }
 
     public void setEmail(String email) {
         this.email = email;
@@ -39,8 +46,8 @@ public class UserEntity {
         return this.email;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getPhone() {
