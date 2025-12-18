@@ -18,7 +18,7 @@ public class UserEntity {
     private String role;
    
 
-    public UserEntity(Long id, String fullname, String email, String phone,String role) {
+    public UserEntity(Long id, String fullname, String email, String password,String role) {
         // this.id = id;
         this.fullname = fullname;
         this.email = email;
