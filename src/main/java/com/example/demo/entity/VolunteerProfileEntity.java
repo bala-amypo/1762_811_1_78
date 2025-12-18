@@ -30,12 +30,12 @@ public class VolunteerProfileEntity {
         
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String fullname) {
+        this.fullname = fullname;
     }
 
     public String getName() {
-        return this.name;
+        return this.fullname;
     }
 
     public void setEmail(String email) {
@@ -46,8 +46,8 @@ public class VolunteerProfileEntity {
         return this.email;
     }
 
-    public void setCgpa(float cgpa) {
-        this.cgpa = cgpa;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public float getCgpa() {
