@@ -50,7 +50,7 @@ public class VolunteerProfileEntity {
         this.phone = phone;
     }
 
-    public float getCgpa() {
-        return this.cgpa;
+    public String getPhone() {
+        return this.phone;
     }
 }
