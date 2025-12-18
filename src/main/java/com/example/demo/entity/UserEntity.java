@@ -20,7 +20,7 @@ public class UserEntity {
 
     public UserEntity(Long id, String fullname, String email, String phone,String availabilityStatus) {
         // this.id = id;
-        this.fullname = fullname;
+       
         this.email = email;
         this.password = password;
         this.role=role;
