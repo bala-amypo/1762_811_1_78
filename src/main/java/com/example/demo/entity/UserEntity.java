@@ -50,14 +50,14 @@ public class UserEntity {
         this.password = password;
     }
 
-    public String getPhone() {
-        return this.phone;
+    public String getPassword() {
+        return this.password;
     }
-    public void setAvailabilityStatus(String availabilityStatus) {
-        this.availabilityStatus = availabilityStatus;
+    public void SetRole(String role) {
+        this.role = role;
     }
 
-    public String getAvailabilityStatus() {
-        return this.availabilityStatus;
+    public String getRole() {
+        return this.role;
     }
 }
