@@ -26,7 +26,7 @@ public class VolunteerProfileEntity {
         this.availabilityStatus=availabilityStatus;
     }
 
-    public StudentEntity() {
+    public VolunteerProfileEntity() {
         
     }
 
