@@ -53,4 +53,11 @@ public class VolunteerProfileEntity {
     public String getPhone() {
         return this.phone;
     }
+    public void setAvailabilityStatus(String availabilityStatus) {
+        this.availabilityStatus = availabilityStatus;
+    }
+
+    public String getAvailabilityStatus() {
+        return this.availabilityStatus;
+    }
 }
