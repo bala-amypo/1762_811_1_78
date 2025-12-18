@@ -22,8 +22,8 @@ public class VolunteerProfileEntity {
         // this.id = id;
         this.fullname = fullname;
         this.email = email;
-        this.phone = phone;
-        this.availabilityStatus=availabilityStatus;
+        this.password = password;
+        this.role=role;
     }
 
     public VolunteerProfileEntity() {
