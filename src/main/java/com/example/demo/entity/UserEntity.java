@@ -30,13 +30,6 @@ public class UserEntity {
         
     }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
-    }
-
-    public String getFullname() {
-        return this.fullname;
-    }
 
     public void setEmail(String email) {
         this.email = email;
