@@ -13,7 +13,9 @@ public class VolunteerProfileEntity {
     private Long id;
     private String fullname;
     private String email;
-    private float cgpa;
+    private String phone;
+    private String availabilityStatus;
+   
 
     public StudentEntity(Long id, String name, String email, float cgpa) {
         // this.id = id;
