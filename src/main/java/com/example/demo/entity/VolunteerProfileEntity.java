@@ -17,11 +17,12 @@ public class VolunteerProfileEntity {
     private String availabilityStatus;
    
 
-    public VolunteerProfileEntity(Long id, String fullname, String email, float cgpa) {
+    public VolunteerProfileEntity(Long id, String fullname, String email, String phone,String availabilityStatus) {
         // this.id = id;
-        this.name = name;
+        this.fullname = fullname;
         this.email = email;
-        this.cgpa = cgpa;
+        this.phone = phone;
+        this.availabilityStatus=availabilityStatus;
     }
 
     public StudentEntity() {
