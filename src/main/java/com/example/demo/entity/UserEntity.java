@@ -6,7 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class VolunteerProfileEntity {
+public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,7 +18,7 @@ public class VolunteerProfileEntity {
     private String role;
    
 
-    public VolunteerProfileEntity(Long id, String fullname, String email, String phone,String availabilityStatus) {
+    public UserEntity(Long id, String fullname, String email, String phone,String availabilityStatus) {
         // this.id = id;
         this.fullname = fullname;
         this.email = email;
