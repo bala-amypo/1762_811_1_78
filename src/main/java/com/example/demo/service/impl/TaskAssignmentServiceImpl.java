@@ -1,41 +1,44 @@
 package com.example.demo.service.impl;
 
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import com.example.demo.entity.TaskAssignmentEntity;
+import com.example.demo.entity.TaskRecordAssignmentEntity;
 import com.example.demo.repository.TaskAssignmentRepository;
 import com.example.demo.service.TaskAssignmentService;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class TaskAssignmentServiceImpl implements TaskAssignmentService {
 
-    @Autowired
-    private TaskAssignmentRepository repo;
+    private final TaskAssignmentRepository repository;
 
-    public TaskAssignmentEntity create(TaskAssignmentEntity task) {
-        return repo.save(task);
+    public TaskAssignmentServiceImpl(TaskAssignmentRepository repository) {
+        this.repository = repository;
     }
 
-    public List<TaskAssignmentEntity> getAll() {
-        return repo.findAll();
+    @Override
+    public TaskRecordAssignmentEntity create(TaskRecordAssignmentEntity task) {
+        return repository.save(task);
     }
 
-    public TaskAssignmentEntity getById(Long id) {
-        return repo.findById(id).orElse(null);
+    @Override
+    public TaskRecordAssignmentEntity update(Long id, TaskRecordAssignmentEntity task) {
+        task.setId(id);
+        return repository.save(task);
     }
 
-    public TaskAssignmentEntity update(Long id, TaskAssignmentEntity task) {
-        TaskAssignmentEntity existing = repo.findById(id).orElse(null);
-        if (existing != null) {
-            existing.setTaskName(task.getTaskName());
-            existing.setDescription(task.getDescription());
-            return repo.save(existing);
-        }
-        return null;
+    @Override
+    public TaskRecordAssignmentEntity getById(Long id) {
+        return repository.findById(id).orElse(null);
     }
 
+    @Override
+    public List<TaskRecordAssignmentEntity> getAll() {
+        return repository.findAll();
+    }
+
+    @Override
     public void delete(Long id) {
-        repo.deleteById(id);
+        repository.deleteById(id);
     }
 }
