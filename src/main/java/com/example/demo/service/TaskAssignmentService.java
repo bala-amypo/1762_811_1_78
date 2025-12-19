@@ -1,8 +1,17 @@
-package com.example.demo.repository;
+package com.example.demo.service;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import com.example.demo.entity.TaskAssignmentEntity;
+import com.example.demo.entity.TaskRecordAssignmentEntity;
+import java.util.List;
 
-public interface TaskAssignmentRepository
-        extends JpaRepository<TaskAssignmentEntity, Long> {
+public interface TaskAssignmentService {
+
+    TaskRecordAssignmentEntity create(TaskRecordAssignmentEntity task);
+
+    TaskRecordAssignmentEntity update(Long id, TaskRecordAssignmentEntity task);
+
+    TaskRecordAssignmentEntity getById(Long id);
+
+    List<TaskRecordAssignmentEntity> getAll();
+
+    void delete(Long id);
 }
