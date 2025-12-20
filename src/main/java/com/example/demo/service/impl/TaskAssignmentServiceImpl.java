@@ -1,20 +1,19 @@
 package com.example.demo.service.impl;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.example.demo.entity.TaskRecordAssignmentEntity;
 import com.example.demo.repository.TaskAssignmentRepository;
 import com.example.demo.service.TaskAssignmentService;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class TaskAssignmentServiceImpl implements TaskAssignmentService {
 
-    private final TaskAssignmentRepository repository;
-
-    public TaskAssignmentServiceImpl(TaskAssignmentRepository repository) {
-        this.repository = repository;
-    }
+    @Autowired
+    private TaskAssignmentRepository repository;
 
     @Override
     public TaskRecordAssignmentEntity create(TaskRecordAssignmentEntity task) {
@@ -22,9 +21,8 @@ public class TaskAssignmentServiceImpl implements TaskAssignmentService {
     }
 
     @Override
-    public TaskRecordAssignmentEntity update(Long id, TaskRecordAssignmentEntity task) {
-        task.setId(id);
-        return repository.save(task);
+    public List<TaskRecordAssignmentEntity> getAll() {
+        return repository.findAll();
     }
 
     @Override
@@ -33,8 +31,15 @@ public class TaskAssignmentServiceImpl implements TaskAssignmentService {
     }
 
     @Override
-    public List<TaskRecordAssignmentEntity> getAll() {
-        return repository.findAll();
+    public TaskRecordAssignmentEntity update(Long id, TaskRecordAssignmentEntity task) {
+        TaskRecordAssignmentEntity existing = repository.findById(id).orElse(null);
+        if (existing != null) {
+            existing.setTaskName(task.getTaskName());
+            existing.setAssignedTo(task.getAssignedTo());
+            existing.setStatus(task.getStatus());
+            return repository.save(existing);
+        }
+        return null;
     }
 
     @Override
