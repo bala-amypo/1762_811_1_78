@@ -19,7 +19,9 @@ public class TaskAssignmentEntity {
     @Column(nullable = false)
     private String status;
 
-    public TaskRecordAssignmentEntity() {}
+    // ✅ Constructor name MUST match class name
+    public TaskAssignmentEntity() {
+    }
 
     public Long getId() {
         return id;
