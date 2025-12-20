@@ -19,7 +19,6 @@ public class TaskAssignmentEntity {
     @Column(nullable = false)
     private String status;
 
-    // ✅ Constructor name MUST match class name
     public TaskAssignmentEntity() {
     }
 

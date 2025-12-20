@@ -1,17 +1,17 @@
 package com.example.demo.service;
 
 import java.util.List;
-import com.example.demo.entity.TaskRecordAssignmentEntity;
+import com.example.demo.entity.TaskAssignmentEntity;
 
 public interface TaskAssignmentService {
 
-    TaskRecordAssignmentEntity create(TaskRecordAssignmentEntity task);
+    TaskAssignmentEntity create(TaskAssignmentEntity task);
 
-    List<TaskRecordAssignmentEntity> getAll();
+    List<TaskAssignmentEntity> getAll();
 
-    TaskRecordAssignmentEntity getById(Long id);
+    TaskAssignmentEntity getById(Long id);
 
-    TaskRecordAssignmentEntity update(Long id, TaskRecordAssignmentEntity task);
+    TaskAssignmentEntity update(Long id, TaskAssignmentEntity task);
 
     void delete(Long id);
 }
