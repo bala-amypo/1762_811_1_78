@@ -54,6 +54,64 @@
 // }
 
 
+// package com.example.demo.controller;
+
+// import com.example.demo.model.VolunteerProfile;
+// import com.example.demo.service.VolunteerProfileService;
+// import org.springframework.http.HttpStatus;
+// import org.springframework.http.ResponseEntity;
+// import org.springframework.web.bind.annotation.*;
+
+// import java.util.List;
+
+// @RestController
+// @RequestMapping("/volunteers")
+// public class VolunteerProfileController {
+
+//     private final VolunteerProfileService volunteerService;
+
+//     public VolunteerProfileController(VolunteerProfileService volunteerService) {
+//         this.volunteerService = volunteerService;
+//     }
+
+//     // Create volunteer
+//     @PostMapping
+//     public ResponseEntity<VolunteerProfile> createVolunteer(@RequestBody VolunteerProfile volunteer) {
+//         VolunteerProfile created = volunteerService.createVolunteer(volunteer);
+//         return ResponseEntity.status(HttpStatus.CREATED).body(created);
+//     }
+
+//     // Get volunteer by ID
+//     @GetMapping("/{id}")
+//     public ResponseEntity<VolunteerProfile> getVolunteer(@PathVariable Long id) {
+//         VolunteerProfile volunteer = volunteerService.getVolunteerById(id);
+//         return ResponseEntity.ok(volunteer);
+//     }
+
+//     // Get all volunteers
+//     @GetMapping
+//     public ResponseEntity<List<VolunteerProfile>> getAllVolunteers() {
+//         List<VolunteerProfile> volunteers = volunteerService.getAllVolunteers();
+//         return ResponseEntity.ok(volunteers);
+//     }
+
+//     // Update volunteer
+//     @PutMapping("/{id}")
+//     public ResponseEntity<VolunteerProfile> updateVolunteer(@PathVariable Long id,
+//                                                             @RequestBody VolunteerProfile volunteer) {
+//         VolunteerProfile updated = volunteerService.updateVolunteer(id, volunteer);
+//         return ResponseEntity.ok(updated);
+//     }
+
+//     // Delete volunteer
+//     @DeleteMapping("/{id}")
+//     public ResponseEntity<Void> deleteVolunteer(@PathVariable Long id) {
+//         volunteerService.deleteVolunteer(id);
+//         return ResponseEntity.noContent().build();
+//     }
+// }
+
+
 package com.example.demo.controller;
 
 import com.example.demo.model.VolunteerProfile;
@@ -74,39 +132,54 @@ public class VolunteerProfileController {
         this.volunteerService = volunteerService;
     }
 
-    // Create volunteer
+    // CREATE volunteer
     @PostMapping
     public ResponseEntity<VolunteerProfile> createVolunteer(@RequestBody VolunteerProfile volunteer) {
         VolunteerProfile created = volunteerService.createVolunteer(volunteer);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
-    // Get volunteer by ID
+    // GET volunteer by ID
     @GetMapping("/{id}")
-    public ResponseEntity<VolunteerProfile> getVolunteer(@PathVariable Long id) {
-        VolunteerProfile volunteer = volunteerService.getVolunteerById(id);
-        return ResponseEntity.ok(volunteer);
+    public ResponseEntity<?> getVolunteer(@PathVariable Long id) {
+        try {
+            VolunteerProfile volunteer = volunteerService.getVolunteerById(id);
+            return ResponseEntity.ok(volunteer);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Volunteer with ID " + id + " not found");
+        }
     }
 
-    // Get all volunteers
+    // GET all volunteers
     @GetMapping
     public ResponseEntity<List<VolunteerProfile>> getAllVolunteers() {
         List<VolunteerProfile> volunteers = volunteerService.getAllVolunteers();
         return ResponseEntity.ok(volunteers);
     }
 
-    // Update volunteer
+    // UPDATE volunteer
     @PutMapping("/{id}")
-    public ResponseEntity<VolunteerProfile> updateVolunteer(@PathVariable Long id,
-                                                            @RequestBody VolunteerProfile volunteer) {
-        VolunteerProfile updated = volunteerService.updateVolunteer(id, volunteer);
-        return ResponseEntity.ok(updated);
+    public ResponseEntity<?> updateVolunteer(@PathVariable Long id,
+                                             @RequestBody VolunteerProfile volunteer) {
+        try {
+            VolunteerProfile updated = volunteerService.updateVolunteer(id, volunteer);
+            return ResponseEntity.ok(updated);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Volunteer with ID " + id + " not found");
+        }
     }
 
-    // Delete volunteer
+    // DELETE volunteer
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteVolunteer(@PathVariable Long id) {
-        volunteerService.deleteVolunteer(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<String> deleteVolunteer(@PathVariable Long id) {
+        try {
+            volunteerService.deleteVolunteer(id);
+            return ResponseEntity.ok("Volunteer with ID " + id + " deleted successfully");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Volunteer with ID " + id + " not found");
+        }
     }
 }
