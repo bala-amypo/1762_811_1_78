@@ -1,49 +1,17 @@
-package com.example.demo.service.impl;
+package com.example.demo.service;
 
 import java.util.List;
+import com.example.demo.entity.TaskAssignmentEntity;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+public interface TaskAssignmentService {
 
-import com.example.demo.entity.TaskRecordAssignmentEntity;
-import com.example.demo.repository.TaskAssignmentRepository;
-import com.example.demo.service.TaskAssignmentService;
+    TaskAssignmentEntity create(TaskAssignmentEntity task);
 
-@Service
-public class TaskAssignmentServiceImpl implements TaskAssignmentService {
+    List<TaskAssignmentEntity> getAll();
 
-    @Autowired
-    private TaskAssignmentRepository repository;
+    TaskAssignmentEntity getById(Long id);
 
-    @Override
-    public TaskRecordAssignmentEntity create(TaskRecordAssignmentEntity task) {
-        return repository.save(task);
-    }
+    TaskAssignmentEntity update(Long id, TaskAssignmentEntity task);
 
-    @Override
-    public List<TaskRecordAssignmentEntity> getAll() {
-        return repository.findAll();
-    }
-
-    @Override
-    public TaskRecordAssignmentEntity getById(Long id) {
-        return repository.findById(id).orElse(null);
-    }
-
-    @Override
-    public TaskRecordAssignmentEntity update(Long id, TaskRecordAssignmentEntity task) {
-        TaskRecordAssignmentEntity existing = repository.findById(id).orElse(null);
-        if (existing != null) {
-            existing.setTaskName(task.getTaskName());
-            existing.setAssignedTo(task.getAssignedTo());
-            existing.setStatus(task.getStatus());
-            return repository.save(existing);
-        }
-        return null;
-    }
-
-    @Override
-    public void delete(Long id) {
-        repository.deleteById(id);
-    }
+    void delete(Long id);
 }
