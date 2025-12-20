@@ -1,61 +1,81 @@
-package com.example.demo.entity;
+package com.example.demo.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "volunteer_profiles")
-public class VolunteerProfileEntity {
+public class VolunteerProfile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "profile_id")
-    private Long profileId;
+    private Long id;
 
-    @Column(name = "volunteer_name", nullable = false)
-    private String volunteerName;
+    @Column(unique = true)
+    private String volunteerId;
 
-    @Column(name = "phone_number")
-    private String phoneNumber;
+    private String fullName;
 
-    @Column(name = "availability")
-    private String availability;
+    @Column(unique = true)
+    private String email;
 
-    // ===== Getters & Setters =====
+    @Column(unique = true)
+    private String phone;
 
-    public Long getProfileId() {
-        return profileId;
+    private String availabilityStatus;
+
+    public VolunteerProfile() {
     }
 
-    public void setProfileId(Long profileId) {
-        this.profileId = profileId;
+    public VolunteerProfile(String volunteerId, String fullName, String email,
+                            String phone, String availabilityStatus) {
+        this.volunteerId = volunteerId;
+        this.fullName = fullName;
+        this.email = email;
+        this.phone = phone;
+        this.availabilityStatus = availabilityStatus;
     }
 
-    public String getVolunteerName() {
-        return volunteerName;
+    public Long getId() {
+        return id;
     }
 
-    public void setVolunteerName(String volunteerName) {
-        this.volunteerName = volunteerName;
+    public String getVolunteerId() {
+        return volunteerId;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public void setVolunteerId(String volunteerId) {
+        this.volunteerId = volunteerId;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public String getFullName() {
+        return fullName;
     }
 
-    public String getAvailability() {
-        return availability;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
-    public void setAvailability(String availability) {
-        this.availability = availability;
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getAvailabilityStatus() {
+        return availabilityStatus;
+    }
+
+    public void setAvailabilityStatus(String availabilityStatus) {
+        this.availabilityStatus = availabilityStatus;
     }
 }
