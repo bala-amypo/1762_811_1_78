@@ -12,24 +12,25 @@ public class TaskAssignmentRecord {
     private Long id;
 
     private Long taskId;
-
     private Long volunteerId;
-
     private LocalDateTime assignedAt;
-
-    private String status; // ACTIVE / COMPLETED / CANCELLED
-
+    private String status;
     private String notes;
 
     @PrePersist
-    public void onAssign() {
-        this.assignedAt = LocalDateTime.now();
-        if (this.status == null) {
-            this.status = "ACTIVE";
-        }
+    public void onCreate() {
+        assignedAt = LocalDateTime.now();
+        status = "ACTIVE";
     }
 
-    public TaskAssignmentRecord() {}
-
-    // getters and setters
+    public Long getId() { return id; }
+    public Long getTaskId() { return taskId; }
+    public void setTaskId(Long taskId) { this.taskId = taskId; }
+    public Long getVolunteerId() { return volunteerId; }
+    public void setVolunteerId(Long volunteerId) { this.volunteerId = volunteerId; }
+    public LocalDateTime getAssignedAt() { return assignedAt; }
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
+    public String getNotes() { return notes; }
+    public void setNotes(String notes) { this.notes = notes; }
 }
