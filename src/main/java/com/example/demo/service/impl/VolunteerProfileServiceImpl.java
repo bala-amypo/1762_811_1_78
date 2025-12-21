@@ -10,43 +10,35 @@ import java.util.List;
 @Service
 public class VolunteerProfileServiceImpl implements VolunteerProfileService {
 
-    private final VolunteerProfileRepository volunteerProfileRepository;
+    private final VolunteerProfileRepository repo;
 
-    public VolunteerProfileServiceImpl(VolunteerProfileRepository volunteerProfileRepository) {
-        this.volunteerProfileRepository = volunteerProfileRepository;
+    public VolunteerProfileServiceImpl(VolunteerProfileRepository repo) {
+        this.repo = repo;
     }
 
-    @Override
-    public VolunteerProfile createVolunteer(VolunteerProfile volunteer) {
-        return volunteerProfileRepository.save(volunteer);
+    public VolunteerProfile save(VolunteerProfile volunteer) {
+        return repo.save(volunteer);
     }
 
-    @Override
-    public VolunteerProfile getVolunteerById(Long id) {
-        return volunteerProfileRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Volunteer not found"));
+    public VolunteerProfile getById(Long id) {
+        return repo.findById(id).orElseThrow();
     }
 
-    @Override
-    public List<VolunteerProfile> getAllVolunteers() {
-        return volunteerProfileRepository.findAll();
+    public List<VolunteerProfile> getAll() {
+        return repo.findAll();
     }
 
-    @Override
-    public VolunteerProfile updateVolunteer(Long id, VolunteerProfile updatedVolunteer) {
-        VolunteerProfile existing = getVolunteerById(id);
-
-        existing.setVolunteerId(updatedVolunteer.getVolunteerId());
-        existing.setFullName(updatedVolunteer.getFullName());
-        existing.setEmail(updatedVolunteer.getEmail());
-        existing.setPhone(updatedVolunteer.getPhone());
-        existing.setAvailabilityStatus(updatedVolunteer.getAvailabilityStatus());
-
-        return volunteerProfileRepository.save(existing);
+    public VolunteerProfile update(Long id, VolunteerProfile v) {
+        VolunteerProfile e = getById(id);
+        e.setVolunteerId(v.getVolunteerId());
+        e.setFullName(v.getFullName());
+        e.setEmail(v.getEmail());
+        e.setPhone(v.getPhone());
+        e.setAvailabilityStatus(v.getAvailabilityStatus());
+        return repo.save(e);
     }
 
-    @Override
-    public void deleteVolunteer(Long id) {
-        volunteerProfileRepository.deleteById(id);
+    public void delete(Long id) {
+        repo.deleteById(id);
     }
 }
