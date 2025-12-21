@@ -12,21 +12,24 @@ public class VolunteerSkillRecord {
     private Long id;
 
     private Long volunteerId;
-
     private String skillName;
-
-    private String skillLevel; // BEGINNER / INTERMEDIATE / EXPERT
-
+    private String skillLevel;
     private Boolean certified;
 
     private LocalDateTime updatedAt;
 
     @PrePersist
-    public void onUpdate() {
+    public void onCreate() {
         this.updatedAt = LocalDateTime.now();
     }
 
-    public VolunteerSkillRecord() {}
-
-    // getters and setters
+    public Long getId() { return id; }
+    public Long getVolunteerId() { return volunteerId; }
+    public void setVolunteerId(Long volunteerId) { this.volunteerId = volunteerId; }
+    public String getSkillName() { return skillName; }
+    public void setSkillName(String skillName) { this.skillName = skillName; }
+    public String getSkillLevel() { return skillLevel; }
+    public void setSkillLevel(String skillLevel) { this.skillLevel = skillLevel; }
+    public Boolean getCertified() { return certified; }
+    public void setCertified(Boolean certified) { this.certified = certified; }
 }
