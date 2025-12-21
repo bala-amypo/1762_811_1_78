@@ -116,8 +116,6 @@ package com.example.demo.controller;
 
 import com.example.demo.model.VolunteerProfile;
 import com.example.demo.service.VolunteerProfileService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -126,60 +124,35 @@ import java.util.List;
 @RequestMapping("/volunteers")
 public class VolunteerProfileController {
 
-    private final VolunteerProfileService volunteerService;
+    private final VolunteerProfileService service;
 
-    public VolunteerProfileController(VolunteerProfileService volunteerService) {
-        this.volunteerService = volunteerService;
+    public VolunteerProfileController(VolunteerProfileService service) {
+        this.service = service;
     }
 
-    // CREATE volunteer
     @PostMapping
-    public ResponseEntity<VolunteerProfile> createVolunteer(@RequestBody VolunteerProfile volunteer) {
-        VolunteerProfile created = volunteerService.createVolunteer(volunteer);
-        return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    public VolunteerProfile create(@RequestBody VolunteerProfile v) {
+        return service.save(v);
     }
 
-    // GET volunteer by ID
     @GetMapping("/{id}")
-    public ResponseEntity<?> getVolunteer(@PathVariable Long id) {
-        try {
-            VolunteerProfile volunteer = volunteerService.getVolunteerById(id);
-            return ResponseEntity.ok(volunteer);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Volunteer with ID " + id + " not found");
-        }
+    public VolunteerProfile get(@PathVariable Long id) {
+        return service.getById(id);
     }
 
-    // GET all volunteers
     @GetMapping
-    public ResponseEntity<List<VolunteerProfile>> getAllVolunteers() {
-        List<VolunteerProfile> volunteers = volunteerService.getAllVolunteers();
-        return ResponseEntity.ok(volunteers);
+    public List<VolunteerProfile> getAll() {
+        return service.getAll();
     }
 
-    // UPDATE volunteer
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateVolunteer(@PathVariable Long id,
-                                             @RequestBody VolunteerProfile volunteer) {
-        try {
-            VolunteerProfile updated = volunteerService.updateVolunteer(id, volunteer);
-            return ResponseEntity.ok(updated);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Volunteer with ID " + id + " not found");
-        }
+    public VolunteerProfile update(@PathVariable Long id, @RequestBody VolunteerProfile v) {
+        return service.update(id, v);
     }
 
-    // DELETE volunteer
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteVolunteer(@PathVariable Long id) {
-        try {
-            volunteerService.deleteVolunteer(id);
-            return ResponseEntity.ok("Volunteer with ID " + id + " deleted successfully");
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Volunteer with ID " + id + " not found");
-        }
+    public String delete(@PathVariable Long id) {
+        service.delete(id);
+        return "Deleted successfully";
     }
 }
