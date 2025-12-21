@@ -32,13 +32,13 @@ public class TaskRecordServiceImpl implements TaskRecordService {
     }
 
     @Override
-    public TaskRecord update(Long id, TaskRecord task) {
-        TaskRecord existing = getById(id);
-        existing.setTaskName(task.getTaskName());
-        existing.setPriority(task.getPriority());
-        existing.setStatus(task.getStatus());
-        return repo.save(existing);
-    }
+   public TaskRecord update(Long id, TaskRecord task) {
+    TaskRecord existing = getById(id);
+    existing.setTaskName(task.getTaskName());
+    existing.setPriority(task.getPriority());
+    return repo.save(existing);
+}
+
 
     @Override
     public void delete(Long id) {
