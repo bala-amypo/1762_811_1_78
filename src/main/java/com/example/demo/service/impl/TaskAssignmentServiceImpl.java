@@ -1,37 +1,38 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.model.TaskRecord;
-import com.example.demo.repository.TaskRecordRepository;
-import com.example.demo.service.TaskRecordService;
+import com.example.demo.model.TaskAssignmentRecord;
+import com.example.demo.repository.TaskAssignmentRecordRepository;
+import com.example.demo.service.TaskAssignmentService;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
-public class TaskRecordServiceImpl implements TaskRecordService {
+public class TaskAssignmentServiceImpl implements TaskAssignmentService {
 
-    private final TaskRecordRepository repo;
+    private final TaskAssignmentRecordRepository repo;
 
-    public TaskRecordServiceImpl(TaskRecordRepository repo) {
+    public TaskAssignmentServiceImpl(TaskAssignmentRecordRepository repo) {
         this.repo = repo;
     }
 
-    public TaskRecord save(TaskRecord task) {
-        return repo.save(task);
+    public TaskAssignmentRecord save(TaskAssignmentRecord record) {
+        return repo.save(record);
     }
 
-    public TaskRecord getById(Long id) {
+    public TaskAssignmentRecord getById(Long id) {
         return repo.findById(id).orElseThrow();
     }
 
-    public List<TaskRecord> getAll() {
+    public List<TaskAssignmentRecord> getAll() {
         return repo.findAll();
     }
 
-    public TaskRecord update(Long id, TaskRecord task) {
-        TaskRecord existing = getById(id);
-        existing.setTaskName(task.getTaskName());
-        existing.setPriority(task.getPriority());
-        return repo.save(existing);
+    public TaskAssignmentRecord update(Long id, TaskAssignmentRecord r) {
+        TaskAssignmentRecord e = getById(id);
+        e.setStatus(r.getStatus());
+        e.setNotes(r.getNotes());
+        return repo.save(e);
     }
 
     public void delete(Long id) {
