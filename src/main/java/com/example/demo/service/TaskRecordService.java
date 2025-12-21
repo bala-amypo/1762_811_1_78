@@ -4,6 +4,7 @@ import com.example.demo.model.TaskRecord;
 import java.util.List;
 
 public interface TaskRecordService {
+
     TaskRecord save(TaskRecord task);
     TaskRecord getById(Long id);
     List<TaskRecord> getAll();
