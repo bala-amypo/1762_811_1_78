@@ -1,18 +1,12 @@
 package com.example.demo.service;
 
 import com.example.demo.model.VolunteerProfile;
-
 import java.util.List;
 
 public interface VolunteerProfileService {
-
-    VolunteerProfile createVolunteer(VolunteerProfile volunteer);
-
-    VolunteerProfile getVolunteerById(Long id);
-
-    List<VolunteerProfile> getAllVolunteers();
-
-    VolunteerProfile updateVolunteer(Long id, VolunteerProfile volunteer);
-
-    void deleteVolunteer(Long id);
+    VolunteerProfile save(VolunteerProfile volunteer);
+    VolunteerProfile getById(Long id);
+    List<VolunteerProfile> getAll();
+    VolunteerProfile update(Long id, VolunteerProfile volunteer);
+    void delete(Long id);
 }
