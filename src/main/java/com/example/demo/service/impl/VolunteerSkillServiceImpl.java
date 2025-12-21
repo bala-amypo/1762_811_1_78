@@ -4,7 +4,6 @@ import com.example.demo.model.VolunteerSkillRecord;
 import com.example.demo.repository.VolunteerSkillRecordRepository;
 import com.example.demo.service.VolunteerSkillService;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -16,7 +15,7 @@ public class VolunteerSkillServiceImpl implements VolunteerSkillService {
         this.repo = repo;
     }
 
-    public VolunteerSkillRecord create(VolunteerSkillRecord skill) {
+    public VolunteerSkillRecord save(VolunteerSkillRecord skill) {
         return repo.save(skill);
     }
 
@@ -29,12 +28,11 @@ public class VolunteerSkillServiceImpl implements VolunteerSkillService {
     }
 
     public VolunteerSkillRecord update(Long id, VolunteerSkillRecord skill) {
-        VolunteerSkillRecord s = getById(id);
-        s.setVolunteerId(skill.getVolunteerId());
-        s.setSkillName(skill.getSkillName());
-        s.setSkillLevel(skill.getSkillLevel());
-        s.setCertified(skill.getCertified());
-        return repo.save(s);
+        VolunteerSkillRecord existing = getById(id);
+        existing.setSkillName(skill.getSkillName());
+        existing.setSkillLevel(skill.getSkillLevel());
+        existing.setCertified(skill.getCertified());
+        return repo.save(existing);
     }
 
     public void delete(Long id) {
