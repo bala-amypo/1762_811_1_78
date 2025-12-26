@@ -39,5 +39,3 @@ http.csrf(csrf -> csrf.disable())
 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 return http.build();
 }
-}
-SwaggerConfig.java
