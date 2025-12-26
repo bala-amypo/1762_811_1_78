@@ -1,24 +1,24 @@
 package com.example.demo.controller;
-import com.example.demo.dto.EvaluationRequest;
-import com.example.demo.model.AssignmentEvaluationRecord;
-import com.example.demo.service.AssignmentEvaluationService;
+import com.example.demo.model.TaskAssignmentRecord;
+import com.example.demo.service.TaskAssignmentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 @RestController
-@RequestMapping("/evaluations")
-public class AssignmentEvaluationController {
-private final AssignmentEvaluationService evaluationService;
-public AssignmentEvaluationController(AssignmentEvaluationService evaluationService) {
-this.evaluationService = evaluationService;
+@RequestMapping("/assignments")
+public class TaskAssignmentController {
+private final TaskAssignmentService assignmentService;
+public TaskAssignmentController(TaskAssignmentService assignmentService) {
+this.assignmentService = assignmentService;
 }
-@PostMapping
-public ResponseEntity<AssignmentEvaluationRecord> evaluateAssignment(@RequestBody EvaluationRequest request) {
-AssignmentEvaluationRecord evaluation = new AssignmentEvaluationRecord(
-request.getAssignmentId(),
-request.getRating(),
-request.getComments()
-);
-AssignmentEvaluationRecord result = evaluationService.evaluateAssignment(evaluation);
-return ResponseEntity.ok(result);
+@GetMapping("/task/{taskId}")
+public ResponseEntity<List<TaskAssignmentRecord>> getAssignmentsByTask(@PathVariable Long taskId) {
+List<TaskAssignmentRecord> assignments = assignmentService.getAssignmentsByTask(taskId);
+return ResponseEntity.ok(assignments);
+}
+@GetMapping("/volunteer/{volunteerId}")
+public ResponseEntity<List<TaskAssignmentRecord>> getAssignmentsByVolunteer(@PathVariable Long volunteerId) {
+List<TaskAssignmentRecord> assignments = assignmentService.getAssignmentsByVolunteer(volunteerId);
+return ResponseEntity.ok(assignments);
 }
 }
