@@ -1,12 +1,26 @@
-package com.example.demo.service;
+// package com.example.demo.service;
 
+// import com.example.demo.model.VolunteerProfile;
+// import java.util.List;
+
+// public interface VolunteerProfileService {
+//     VolunteerProfile save(VolunteerProfile volunteer);
+//     VolunteerProfile getById(Long id);
+//     List<VolunteerProfile> getAll();
+//     VolunteerProfile update(Long id, VolunteerProfile volunteer);
+//     void delete(Long id);
+// }
+package com.example.demo.service;
+import com.example.demo.dto.RegisterRequest;
 import com.example.demo.model.VolunteerProfile;
 import java.util.List;
-
+import java.util.Optional;
 public interface VolunteerProfileService {
-    VolunteerProfile save(VolunteerProfile volunteer);
-    VolunteerProfile getById(Long id);
-    List<VolunteerProfile> getAll();
-    VolunteerProfile update(Long id, VolunteerProfile volunteer);
-    void delete(Long id);
+VolunteerProfile registerVolunteer(RegisterRequest request);
+VolunteerProfile updateAvailability(Long volunteerId, String availabilityStatus);
+List<VolunteerProfile> getAvailableVolunteers();
+VolunteerProfile createVolunteer(VolunteerProfile profile);
+VolunteerProfile getVolunteerById(Long id);
+List<VolunteerProfile> getAllVolunteers();
+Optional<VolunteerProfile> findByVolunteerId(String volunteerId);
 }
