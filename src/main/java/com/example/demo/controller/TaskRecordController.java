@@ -2,42 +2,50 @@ package com.example.demo.controller;
 
 import com.example.demo.model.TaskRecord;
 import com.example.demo.service.TaskRecordService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
-@RequestMapping("/tasks")
+@RequestMapping("/api/tasks")
+@Tag(name = "Tasks")
 public class TaskRecordController {
 
-    private final TaskRecordService service;
+    private final TaskRecordService taskRecordService;
 
-    public TaskRecordController(TaskRecordService service) {
-        this.service = service;
+    public TaskRecordController(TaskRecordService taskRecordService) {
+        this.taskRecordService = taskRecordService;
     }
 
+    @Operation(summary = "Create task")
     @PostMapping
-    public TaskRecord create(@RequestBody TaskRecord task) {
-        return service.save(task);
+    public TaskRecord createTask(@RequestBody TaskRecord task) {
+        return taskRecordService.createTask(task);
     }
 
-    @GetMapping("/{id}")
-    public TaskRecord get(@PathVariable Long id) {
-        return service.getById(id);
-    }
-
-    @GetMapping
-    public List<TaskRecord> getAll() {
-        return service.getAll();
-    }
-
+    @Operation(summary = "Update task")
     @PutMapping("/{id}")
-    public TaskRecord update(@PathVariable Long id, @RequestBody TaskRecord task) {
-        return service.update(id, task);
+    public TaskRecord updateTask(@PathVariable Long id, @RequestBody TaskRecord task) {
+        return taskRecordService.updateTask(id, task);
     }
 
-    @DeleteMapping("/{id}")
-    public String delete(@PathVariable Long id) {
-        service.delete(id);
-        return "Deleted successfully";
+    @Operation(summary = "Get open tasks")
+    @GetMapping("/open")
+    public List<TaskRecord> getOpenTasks() {
+        return taskRecordService.getOpenTasks();
+    }
+
+    @Operation(summary = "Get task by ID")
+    @GetMapping("/{id}")
+    public TaskRecord getTask(@PathVariable Long id) {
+        return taskRecordService.getTaskById(id);
+    }
+
+    @Operation(summary = "Get all tasks")
+    @GetMapping
+    public List<TaskRecord> getAllTasks() {
+        return taskRecordService.getAllTasks();
     }
 }
