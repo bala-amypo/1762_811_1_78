@@ -1,24 +1,41 @@
 package com.example.demo.service.impl;
+
 import com.example.demo.model.VolunteerSkillRecord;
 import com.example.demo.repository.VolunteerSkillRecordRepository;
 import com.example.demo.service.VolunteerSkillService;
 import org.springframework.stereotype.Service;
-import java.time.LocalDateTime;
 import java.util.List;
+
 @Service
 public class VolunteerSkillServiceImpl implements VolunteerSkillService {
-private final VolunteerSkillRecordRepository repository;
-public VolunteerSkillServiceImpl(VolunteerSkillRecordRepository repository) {
-this.repository = repository;
-}
-@Override
-public List<VolunteerSkillRecord> getSkillsByVolunteer(Long volunteerId) {
-return repository.findByVolunteerId(volunteerId);
-}
-@Override
-public VolunteerSkillRecord addOrUpdateSkill(VolunteerSkillRecord skill) {
-// REQUIRED BY TEST (Mockito does NOT trigger JPA callbacks)
-skill.setUpdatedAt(LocalDateTime.now());
-return repository.save(skill);
-}
+
+    private final VolunteerSkillRecordRepository repo;
+
+    public VolunteerSkillServiceImpl(VolunteerSkillRecordRepository repo) {
+        this.repo = repo;
+    }
+
+    public VolunteerSkillRecord save(VolunteerSkillRecord skill) {
+        return repo.save(skill);
+    }
+
+    public VolunteerSkillRecord getById(Long id) {
+        return repo.findById(id).orElseThrow();
+    }
+
+    public List<VolunteerSkillRecord> getAll() {
+        return repo.findAll();
+    }
+
+    public VolunteerSkillRecord update(Long id, VolunteerSkillRecord skill) {
+        VolunteerSkillRecord existing = getById(id);
+        existing.setSkillName(skill.getSkillName());
+        existing.setSkillLevel(skill.getSkillLevel());
+        existing.setCertified(skill.getCertified());
+        return repo.save(existing);
+    }
+
+    public void delete(Long id) {
+        repo.deleteById(id);
+    }
 }
