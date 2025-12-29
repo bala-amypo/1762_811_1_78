@@ -1,53 +1,72 @@
+// package com.example.demo.controller;
+// import com.example.demo.dto.AvailabilityUpdateRequest;
+// import com.example.demo.dto.RegisterRequest;
+// import com.example.demo.model.VolunteerProfile;
+// import com.example.demo.service.VolunteerProfileService;
+// import org.springframework.http.ResponseEntity;
+// import org.springframework.web.bind.annotation.*;
+// @RestController
+// @RequestMapping("/volunteers")
+// public class VolunteerProfileController {
+// private final VolunteerProfileService volunteerService;
+// public VolunteerProfileController(VolunteerProfileService volunteerService) {
+// this.volunteerService = volunteerService;
+// }
+// @PostMapping
+// public ResponseEntity<VolunteerProfile> registerVolunteer(@RequestBody RegisterRequest request) {
+// VolunteerProfile profile = volunteerService.registerVolunteer(request);
+// return ResponseEntity.ok(profile);
+// }
+// @PatchMapping("/{id}/availability")
+// public ResponseEntity<VolunteerProfile> updateAvailability(@PathVariable Long id,
+// @RequestBody AvailabilityUpdateRequest request) {
+// VolunteerProfile profile = volunteerService.updateAvailability(id, request.getAvailabilityStatus());
+// return ResponseEntity.ok(profile);
+// }
+// }
+
+
 package com.example.demo.controller;
 
 import com.example.demo.model.VolunteerProfile;
 import com.example.demo.service.VolunteerProfileService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/volunteers")
-@Tag(name = "Volunteer Profile")
+@RequestMapping("/volunteers")
 public class VolunteerProfileController {
 
-    private final VolunteerProfileService volunteerProfileService;
+    private final VolunteerProfileService service;
 
-    public VolunteerProfileController(VolunteerProfileService volunteerProfileService) {
-        this.volunteerProfileService = volunteerProfileService;
+    public VolunteerProfileController(VolunteerProfileService service) {
+        this.service = service;
     }
 
-    @Operation(summary = "Create volunteer")
     @PostMapping
-    public VolunteerProfile createVolunteer(@RequestBody VolunteerProfile profile) {
-        return volunteerProfileService.createVolunteer(profile);
+    public VolunteerProfile create(@RequestBody VolunteerProfile v) {
+        return service.save(v);
     }
 
-    @Operation(summary = "Get volunteer by ID")
     @GetMapping("/{id}")
-    public VolunteerProfile getVolunteer(@PathVariable Long id) {
-        return volunteerProfileService.getVolunteerById(id);
+    public VolunteerProfile get(@PathVariable Long id) {
+        return service.getById(id);
     }
 
-    @Operation(summary = "Get all volunteers")
     @GetMapping
-    public List<VolunteerProfile> getAllVolunteers() {
-        return volunteerProfileService.getAllVolunteers();
+    public List<VolunteerProfile> getAll() {
+        return service.getAll();
     }
 
-    @Operation(summary = "Update availability status")
-    @PutMapping("/{id}/availability")
-    public VolunteerProfile updateAvailability(
-            @PathVariable Long id,
-            @RequestParam String status) {
-        return volunteerProfileService.updateAvailability(id, status);
+    @PutMapping("/{id}")
+    public VolunteerProfile update(@PathVariable Long id, @RequestBody VolunteerProfile v) {
+        return service.update(id, v);
     }
 
-    @Operation(summary = "Find volunteer by volunteerId")
-    @GetMapping("/lookup/{volunteerId}")
-    public VolunteerProfile findByVolunteerId(@PathVariable String volunteerId) {
-        return volunteerProfileService.findByVolunteerId(volunteerId);
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable Long id) {
+        service.delete(id);
+        return "Deleted successfully";
     }
 }

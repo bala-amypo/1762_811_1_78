@@ -2,50 +2,42 @@ package com.example.demo.controller;
 
 import com.example.demo.model.TaskRecord;
 import com.example.demo.service.TaskRecordService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/tasks")
-@Tag(name = "Tasks")
+@RequestMapping("/tasks")
 public class TaskRecordController {
 
-    private final TaskRecordService taskRecordService;
+    private final TaskRecordService service;
 
-    public TaskRecordController(TaskRecordService taskRecordService) {
-        this.taskRecordService = taskRecordService;
+    public TaskRecordController(TaskRecordService service) {
+        this.service = service;
     }
 
-    @Operation(summary = "Create task")
     @PostMapping
-    public TaskRecord createTask(@RequestBody TaskRecord task) {
-        return taskRecordService.createTask(task);
+    public TaskRecord create(@RequestBody TaskRecord task) {
+        return service.save(task);
     }
 
-    @Operation(summary = "Update task")
-    @PutMapping("/{id}")
-    public TaskRecord updateTask(@PathVariable Long id, @RequestBody TaskRecord task) {
-        return taskRecordService.updateTask(id, task);
-    }
-
-    @Operation(summary = "Get open tasks")
-    @GetMapping("/open")
-    public List<TaskRecord> getOpenTasks() {
-        return taskRecordService.getOpenTasks();
-    }
-
-    @Operation(summary = "Get task by ID")
     @GetMapping("/{id}")
-    public TaskRecord getTask(@PathVariable Long id) {
-        return taskRecordService.getTaskById(id);
+    public TaskRecord get(@PathVariable Long id) {
+        return service.getById(id);
     }
 
-    @Operation(summary = "Get all tasks")
     @GetMapping
-    public List<TaskRecord> getAllTasks() {
-        return taskRecordService.getAllTasks();
+    public List<TaskRecord> getAll() {
+        return service.getAll();
+    }
+
+    @PutMapping("/{id}")
+    public TaskRecord update(@PathVariable Long id, @RequestBody TaskRecord task) {
+        return service.update(id, task);
+    }
+
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable Long id) {
+        service.delete(id);
+        return "Deleted successfully";
     }
 }
