@@ -2,43 +2,50 @@ package com.example.demo.controller;
 
 import com.example.demo.model.VolunteerSkillRecord;
 import com.example.demo.service.VolunteerSkillService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
-@RequestMapping("/skills")
+@RequestMapping("/api/skills")
 public class VolunteerSkillController {
 
-    private final VolunteerSkillService service;
+    private final VolunteerSkillService volunteerSkillService;
 
-    public VolunteerSkillController(VolunteerSkillService service) {
-        this.service = service;
+    @Autowired
+    public VolunteerSkillController(VolunteerSkillService volunteerSkillService) {
+        this.volunteerSkillService = volunteerSkillService;
     }
 
+    // POST / - Add/update skill
     @PostMapping
-    public VolunteerSkillRecord create(@RequestBody VolunteerSkillRecord skill) {
-        return service.save(skill);
+    public ResponseEntity<VolunteerSkillRecord> addOrUpdateSkill(@RequestBody VolunteerSkillRecord skill) {
+        // Now works because save() is in the Interface
+        return ResponseEntity.ok(volunteerSkillService.save(skill));
     }
 
+    // GET /volunteer/{volunteerId} - Get skills for a specific volunteer
+    @GetMapping("/volunteer/{volunteerId}")
+    public ResponseEntity<List<VolunteerSkillRecord>> getSkillsByVolunteer(@PathVariable Long volunteerId) {
+        return ResponseEntity.ok(volunteerSkillService.getSkillsByVolunteer(volunteerId));
+    }
+
+    // GET /{id} - Get a specific skill by its ID
     @GetMapping("/{id}")
-    public VolunteerSkillRecord get(@PathVariable Long id) {
-        return service.getById(id);
+    public ResponseEntity<VolunteerSkillRecord> getSkillById(@PathVariable Long id) {
+        // Now works because findById() is in the Interface 
+        // AND we use .orElseThrow() to handle the Optional
+        VolunteerSkillRecord record = volunteerSkillService.findById(id)
+                .orElseThrow(() -> new RuntimeException("Skill not found with id: " + id));
+        
+        return ResponseEntity.ok(record);
     }
 
+    // GET / - List all skills
     @GetMapping
-    public List<VolunteerSkillRecord> getAll() {
-        return service.getAll();
-    }
-
-    @PutMapping("/{id}")
-    public VolunteerSkillRecord update(@PathVariable Long id,
-                                       @RequestBody VolunteerSkillRecord skill) {
-        return service.update(id, skill);
-    }
-
-    @DeleteMapping("/{id}")
-    public String delete(@PathVariable Long id) {
-        service.delete(id);
-        return "Deleted successfully";
+    public ResponseEntity<List<VolunteerSkillRecord>> listAll() {
+        return ResponseEntity.ok(volunteerSkillService.getAllSkills());
     }
 }
