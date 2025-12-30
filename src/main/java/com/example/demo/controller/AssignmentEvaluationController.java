@@ -2,38 +2,44 @@ package com.example.demo.controller;
 
 import com.example.demo.model.AssignmentEvaluationRecord;
 import com.example.demo.service.AssignmentEvaluationService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/evaluations")
-@Tag(name = "Assignment Evaluations")
+@RequestMapping("/evaluations")
 public class AssignmentEvaluationController {
 
-    private final AssignmentEvaluationService evaluationService;
+    private final AssignmentEvaluationService service;
 
-    public AssignmentEvaluationController(AssignmentEvaluationService evaluationService) {
-        this.evaluationService = evaluationService;
+    public AssignmentEvaluationController(AssignmentEvaluationService service) {
+        this.service = service;
     }
 
-    @Operation(summary = "Submit evaluation")
     @PostMapping
-    public AssignmentEvaluationRecord evaluate(@RequestBody AssignmentEvaluationRecord record) {
-        return evaluationService.evaluateAssignment(record);
+    public AssignmentEvaluationRecord create(@RequestBody AssignmentEvaluationRecord r) {
+        return service.save(r);
     }
 
-    @Operation(summary = "Get evaluations by assignment")
-    @GetMapping("/assignment/{assignmentId}")
-    public List<AssignmentEvaluationRecord> getByAssignment(@PathVariable Long assignmentId) {
-        return evaluationService.getEvaluationsByAssignment(assignmentId);
+    @GetMapping("/{id}")
+    public AssignmentEvaluationRecord get(@PathVariable Long id) {
+        return service.getById(id);
     }
 
-    @Operation(summary = "Get all evaluations")
     @GetMapping
-    public List<AssignmentEvaluationRecord> getAllEvaluations() {
-        return evaluationService.getAllEvaluations();
+    public List<AssignmentEvaluationRecord> getAll() {
+        return service.getAll();
+    }
+
+    @PutMapping("/{id}")
+    public AssignmentEvaluationRecord update(@PathVariable Long id,
+                                             @RequestBody AssignmentEvaluationRecord r) {
+        return service.update(id, r);
+    }
+
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable Long id) {
+        service.delete(id);
+        return "Deleted successfully";
     }
 }
