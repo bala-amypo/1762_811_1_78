@@ -1,44 +1,74 @@
-package com.example.demo.service.impl;
-
-import com.example.demo.model.VolunteerProfile;
-import com.example.demo.repository.VolunteerProfileRepository;
-import com.example.demo.service.VolunteerProfileService;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-
-@Service
-public class VolunteerProfileServiceImpl implements VolunteerProfileService {
-
-    private final VolunteerProfileRepository repo;
-
-    public VolunteerProfileServiceImpl(VolunteerProfileRepository repo) {
-        this.repo = repo;
-    }
-
-    public VolunteerProfile save(VolunteerProfile volunteer) {
-        return repo.save(volunteer);
-    }
-
-    public VolunteerProfile getById(Long id) {
-        return repo.findById(id).orElseThrow();
-    }
-
-    public List<VolunteerProfile> getAll() {
-        return repo.findAll();
-    }
-
-    public VolunteerProfile update(Long id, VolunteerProfile v) {
-        VolunteerProfile e = getById(id);
-        e.setVolunteerId(v.getVolunteerId());
-        e.setFullName(v.getFullName());
-        e.setEmail(v.getEmail());
-        e.setPhone(v.getPhone());
-        e.setAvailabilityStatus(v.getAvailabilityStatus());
-        return repo.save(e);
-    }
-
-    public void delete(Long id) {
-        repo.deleteById(id);
-    }
+package com.example.demo.service.impl; 
+ 
+import com.example.demo.dto.RegisterRequest; 
+import com.example.demo.exception.BadRequestException; 
+import com.example.demo.exception.ResourceNotFoundException; 
+import com.example.demo.model.VolunteerProfile; 
+import com.example.demo.repository.VolunteerProfileRepository; 
+import com.example.demo.service.VolunteerProfileService; 
+import org.springframework.stereotype.Service; 
+import java.util.List; 
+import java.util.Optional; 
+ 
+@Service 
+public class VolunteerProfileServiceImpl implements VolunteerProfileService { 
+     
+    private final VolunteerProfileRepository repository; 
+     
+    public VolunteerProfileServiceImpl(VolunteerProfileRepository repository) { 
+        this.repository = repository; 
+    } 
+     
+    @Override 
+    public VolunteerProfile registerVolunteer(RegisterRequest request) { 
+        VolunteerProfile profile = new VolunteerProfile( 
+            request.getName(),  
+            request.getEmail(),  
+            request.getAvailabilityStatus() != null ? request.getAvailabilityStatus() : "AVAILABLE" 
+        ); 
+        return repository.save(profile); 
+    } 
+     
+    @Override 
+    public VolunteerProfile createVolunteer(VolunteerProfile profile) { 
+        if (repository.existsByVolunteerId(profile.getVolunteerId())) { 
+            throw new BadRequestException("Volunteer ID already exists"); 
+        } 
+        if (repository.existsByEmail(profile.getEmail())) { 
+            throw new BadRequestException("Email already exists"); 
+        } 
+        if (repository.existsByPhone(profile.getPhone())) { 
+            throw new BadRequestException("Phone already exists"); 
+        } 
+        return repository.save(profile); 
+    } 
+     
+    @Override 
+    public VolunteerProfile getVolunteerById(Long id) { 
+        return repository.findById(id) 
+            .orElseThrow(() -> new ResourceNotFoundException("Volunteer not found")); 
+    } 
+     
+    @Override 
+    public List<VolunteerProfile> getAllVolunteers() { 
+        return repository.findAll(); 
+    } 
+     
+    @Override 
+    public Optional<VolunteerProfile> findByVolunteerId(String volunteerId) { 
+        return repository.findByVolunteerId(volunteerId); 
+    } 
+     
+    @Override 
+    public VolunteerProfile updateAvailability(Long volunteerId, String availabilityStatus) { 
+        VolunteerProfile profile = repository.findById(volunteerId) 
+            .orElseThrow(() -> new ResourceNotFoundException("Volunteer not found")); 
+        profile.setAvailabilityStatus(availabilityStatus); 
+        return repository.save(profile); 
+    } 
+     
+    @Override 
+    public List<VolunteerProfile> getAvailableVolunteers() { 
+        return repository.findByAvailabilityStatus("AVAILABLE"); 
+    } 
 }
