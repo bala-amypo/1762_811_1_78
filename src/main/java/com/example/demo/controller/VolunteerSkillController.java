@@ -1,44 +1,44 @@
-package com.example.demo.controller;
+// package com.example.demo.controller;
 
-import com.example.demo.model.VolunteerSkillRecord;
-import com.example.demo.service.VolunteerSkillService;
-import org.springframework.web.bind.annotation.*;
-import java.util.List;
+// import com.example.demo.model.VolunteerSkillRecord;
+// import com.example.demo.service.VolunteerSkillService;
+// import org.springframework.web.bind.annotation.*;
+// import java.util.List;
 
-@RestController
-@RequestMapping("/skills")
-public class VolunteerSkillController {
+// @RestController
+// @RequestMapping("/skills")
+// public class VolunteerSkillController {
 
-    private final VolunteerSkillService service;
+//     private final VolunteerSkillService service;
 
-    public VolunteerSkillController(VolunteerSkillService service) {
-        this.service = service;
-    }
+//     public VolunteerSkillController(VolunteerSkillService service) {
+//         this.service = service;
+//     }
 
-    @PostMapping
-    public VolunteerSkillRecord create(@RequestBody VolunteerSkillRecord skill) {
-        return service.save(skill);
-    }
+//     @PostMapping
+//     public VolunteerSkillRecord create(@RequestBody VolunteerSkillRecord skill) {
+//         return service.save(skill);
+//     }
 
-    @GetMapping("/{id}")
-    public VolunteerSkillRecord get(@PathVariable Long id) {
-        return service.getById(id);
-    }
+//     @GetMapping("/{id}")
+//     public VolunteerSkillRecord get(@PathVariable Long id) {
+//         return service.getById(id);
+//     }
 
-    @GetMapping
-    public List<VolunteerSkillRecord> getAll() {
-        return service.getAll();
-    }
+//     @GetMapping
+//     public List<VolunteerSkillRecord> getAll() {
+//         return service.getAll();
+//     }
 
-    @PutMapping("/{id}")
-    public VolunteerSkillRecord update(@PathVariable Long id,
-                                       @RequestBody VolunteerSkillRecord skill) {
-        return service.update(id, skill);
-    }
+//     @PutMapping("/{id}")
+//     public VolunteerSkillRecord update(@PathVariable Long id,
+//                                        @RequestBody VolunteerSkillRecord skill) {
+//         return service.update(id, skill);
+//     }
 
-    @DeleteMapping("/{id}")
-    public String delete(@PathVariable Long id) {
-        service.delete(id);
-        return "Deleted successfully";
-    }
-}
+//     @DeleteMapping("/{id}")
+//     public String delete(@PathVariable Long id) {
+//         service.delete(id);
+//         return "Deleted successfully";
+//     }
+// }

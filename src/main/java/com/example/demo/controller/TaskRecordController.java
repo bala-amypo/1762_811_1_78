@@ -1,43 +1,43 @@
-package com.example.demo.controller;
+// package com.example.demo.controller;
 
-import com.example.demo.model.TaskRecord;
-import com.example.demo.service.TaskRecordService;
-import org.springframework.web.bind.annotation.*;
-import java.util.List;
+// import com.example.demo.model.TaskRecord;
+// import com.example.demo.service.TaskRecordService;
+// import org.springframework.web.bind.annotation.*;
+// import java.util.List;
 
-@RestController
-@RequestMapping("/tasks")
-public class TaskRecordController {
+// @RestController
+// @RequestMapping("/tasks")
+// public class TaskRecordController {
 
-    private final TaskRecordService service;
+//     private final TaskRecordService service;
 
-    public TaskRecordController(TaskRecordService service) {
-        this.service = service;
-    }
+//     public TaskRecordController(TaskRecordService service) {
+//         this.service = service;
+//     }
 
-    @PostMapping
-    public TaskRecord create(@RequestBody TaskRecord task) {
-        return service.save(task);
-    }
+//     @PostMapping
+//     public TaskRecord create(@RequestBody TaskRecord task) {
+//         return service.save(task);
+//     }
 
-    @GetMapping("/{id}")
-    public TaskRecord get(@PathVariable Long id) {
-        return service.getById(id);
-    }
+//     @GetMapping("/{id}")
+//     public TaskRecord get(@PathVariable Long id) {
+//         return service.getById(id);
+//     }
 
-    @GetMapping
-    public List<TaskRecord> getAll() {
-        return service.getAll();
-    }
+//     @GetMapping
+//     public List<TaskRecord> getAll() {
+//         return service.getAll();
+//     }
 
-    @PutMapping("/{id}")
-    public TaskRecord update(@PathVariable Long id, @RequestBody TaskRecord task) {
-        return service.update(id, task);
-    }
+//     @PutMapping("/{id}")
+//     public TaskRecord update(@PathVariable Long id, @RequestBody TaskRecord task) {
+//         return service.update(id, task);
+//     }
 
-    @DeleteMapping("/{id}")
-    public String delete(@PathVariable Long id) {
-        service.delete(id);
-        return "Deleted successfully";
-    }
-}
+//     @DeleteMapping("/{id}")
+//     public String delete(@PathVariable Long id) {
+//         service.delete(id);
+//         return "Deleted successfully";
+//     }
+// }
